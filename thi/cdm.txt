@@ -1,0 +1,475 @@
+====> Dowload Server =====================================================================================
+https://tomcat.apache.org/download-90.cgi
+
+====> Dowload JSF 2.2 mojarra =====================================================================================
+https://stackoverflow.com/questions/44858251/when-downloading-mojarra-libraries-for-jsf-it-is-showing-error-zip-file-is-empt
+	
+====> Dowload mysql connector =====================================================================================
+https://dev.mysql.com/downloads/connector/j/
+https://jar-download.com/download-handling.php
+
+====> MySQL by CMD
+ 	- Bật XamPP -> start MySQL
+	- Chạy lệnh: mysql -u root -p
+	- Bỏ qua nhập pass và or enter bỏ qua
+	- Hiển thị các database hiện có: show databases;
+	- Tạo database nguoidung: create database nguoidung2;
+	- truy cập vào database nguoi dung: use nguoidung;
+	- Tạo table tài khoản:
+		CREATE TABLE taikhoan(
+		id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+		hoten VARCHAR(100), 
+		diachi VARCHAR(50));
+
+		INSERT INTO taikhoan (hoten , diachi  ) VALUES ('le van trieu', 'cantho' ); 
+		INSERT INTO taikhoan (hoten , diachi  ) VALUES ('lieu minh tri', 'soc trang' ); 
+
+	- Hiển thị các bảng table có trong database nguoidung: show tables;
+	- Hiển thị bảng tài khoản: select * from taikhoan;
+
+====> File index.xhtml (dạng đăng nhập) =====================================================================================
+<!DOCTYPE HTML>
+
+<html 
+	lang="vi"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+ <h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" /> 
+    <title>Thi Dau Vao</title> 
+</h:head>
+<h:body>
+    <center><h2><h:outputText value="Dang nhap"/></h2></center>
+    <h:form > 
+            
+            	<center>
+            	
+	                User:
+	                <h:inputText value="#{DN.tk.user}" />
+	            	<br></br><br></br>
+	           
+	                Pass:
+	                <h:inputSecret value="#{DN.tk.pass}" />
+		            <br></br><br></br>
+	         
+	                <h:commandButton action="#{DN.DangNhap(DN.tk)}" value="Dang nhap" />
+	          		<br></br><br></br>
+	          
+	                <h:commandButton action="DangKy.xhtml" value="Dang ky"  />
+	          		<br></br><br></br>
+          		
+          		</center>
+    </h:form>
+</h:body>
+ 
+</html>
+
+
+====> File dạng như đăng ký =====================================================================================
+<!DOCTYPE HTML>
+
+<html 
+	lang="vi"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+ <h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" /> 
+    <title>Thi Dau Vao</title> 
+</h:head>
+<h:body>
+    <center><h2><h:outputText value="Dang Ky"/></h2></center>
+    <h:form >  
+        	<center>
+				UserName:
+                <h:inputText value="#{DN.dk.user}" />
+            	<br></br><br></br>
+           
+                PassWord:
+                <h:inputSecret value="#{DN.dk.pass}" />
+	            <br></br><br></br>
+	            
+	            Email:
+                <h:inputText value="#{DN.dk.email}" />
+            	<br></br><br></br>
+	            
+	            Dia Chi:
+                <h:inputText value="#{DN.dk.diachi}" />
+            	<br></br><br></br>
+ 
+====> File hiển thị danh sách =====================================================================================
+<!DOCTYPE HTML>
+
+<html 
+	lang="vi"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+ <h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" /> 
+    <title>Thi Dau Vao</title> 
+</h:head>
+<h:body>
+    
+	<center>
+		<center><h1>Danh Sach Nguoi Dung</h1></center>
+		 <h:form > 
+		<h:dataTable var="tt" value="#{DN.DanhSachNguoiDung()}" border="1">
+			<h:column>
+				<f:facet name="header">Email</f:facet>
+				#{tt.email}
+			</h:column>
+			<h:column>
+				<f:facet name="header">Dia Chi</f:facet>
+				#{tt.diachi}
+			</h:column>
+ 
+			<h:column>
+					<f:facet name="header">1</f:facet>
+					<h:commandButton value="Sua thong tin"  action="#{DN.LoadThonngTin(tt.id)}"></h:commandButton>
+			</h:column>
+			<h:column>
+					<f:facet name="header">2</f:facet>
+					<h:commandButton value="Xoa thong tin"  action="#{DN.XoaNguoiDung(tt.id)}"></h:commandButton>
+			</h:column>
+		</h:dataTable>
+		</h:form>
+	</center> 
+	  
+</h:body>
+ 
+</html>
+
+===> File hiển thị thông tin để sửa
+<!DOCTYPE HTML>
+<html 
+	lang="vi"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+ 
+<h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+   
+    <title>JSF CRUD Example</title>
+ 
+</h:head>
+<h:body>
+        <h:form id="form" class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <h2 style="text-align: center" class="col-sm-4">Sua Thong tin nguoi dung</h2>
+            </div>
+            <hr/>
+            <div class="form-group">
+                <h:outputLabel for="email" class="control-label col-sm-2">Ho ten:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="email-id" value="#{thongtin_edit.email}" class="form-control"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <h:outputLabel for="diachi" class="control-label col-sm-2">Dia chi:</h:outputLabel>
+                <div class="col-sm-4">
+                    <h:inputText id="diachi-id" value="#{thongtin_edit.diachi}" class="form-control"/>
+                </div>
+            </div>
+           
+           
+            <div class="form-group">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-4">
+                    <h:commandButton value="Luu" action="#{DN.SuaThongTin(thongtin_edit) }" class="btn btn-primary updateBtnStyle" />
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+
+===> File connect database và các hàm để xữ lý =====================================================================================
+package ManagerBean;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import Model.DangKy;
+import Model.TaiKhoan;
+import Model.ThongTin;
+
+@ManagedBean(name = "DN") 
+@RequestScoped 
+@SessionScoped
+public class DangNhap {
+  	public static Statement stmtObj;
+    public static Connection connObj;
+    public static ResultSet resultSetObj;
+    public static PreparedStatement pstmt;
+    
+    public TaiKhoan tk = new TaiKhoan();
+    public DangKy dk = new DangKy();
+    public ThongTin tt = new ThongTin(); 
+  
+    
+
+	public ThongTin getTt() {
+		return tt;
+	}
+
+	public void setTt(ThongTin tt) {
+		this.tt = tt;
+	}
+
+	public TaiKhoan getTk() {
+		return tk;
+	}
+
+	public DangKy getDk() {
+		return dk;
+	}
+
+	public void setDk(DangKy dk) {
+		this.dk = dk;
+	}
+
+	public void setTk(TaiKhoan tk) {
+		this.tk = tk;
+	}
+
+	public static Connection getConnection (){ 
+	    
+		try{  
+	        Class.forName("com.mysql.jdbc.Driver");     
+	        String db_url ="jdbc:mysql://localhost:3306/nguoidung",
+	                db_userName = "root",
+	                db_password = "";
+	        connObj = DriverManager.getConnection(db_url,db_userName,db_password);  
+	          
+	    } catch(Exception sqlException) {  
+	        sqlException.printStackTrace();
+	    }  
+	    return connObj;
+		
+	}
+	
+	// hàm sử lý dang nhap
+	public String DangNhap(TaiKhoan tks) { 
+		
+		System.out.println("User: " + tks.getUser());
+		System.out.println("Pass: " + tks.getPass());
+        
+        String navigationResult = "";
+        
+        try {      
+        	stmtObj = getConnection().createStatement();   
+            resultSetObj = stmtObj.executeQuery("select * from taikhoan where username = \'"+tks.getUser()+"\' and password = \'"+tks.getPass()+"\'");  
+            if(resultSetObj.next()) {
+            	navigationResult = "DanhSachNguoiDung.xhtml?faces-redirect=true";
+            	System.out.println("Dang nhap thanh cong");
+            	System.out.println("navigationResult: "+navigationResult);
+            }else {
+            	 navigationResult = "index.xhtml?faces-redirect=true";
+            	 System.out.println("Dang nhap that bai");
+			}
+            connObj.close();
+        } catch(Exception sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("----Loi: " + sqlException);
+        }
+        
+
+        return navigationResult;      		
+	}
+
+	
+	// ham dang ky thong tin 
+	public String DangKy(DangKy dks) {
+		
+		System.out.println("UserName: " + dks.getUser());
+		System.out.println("PassWord: " + dks.getPass());
+		System.out.println("Email: " + dks.getEmail());
+		System.out.println("Dia Chi: " + dks.getDiachi());
+		
+        int Res_TK = 0;
+        int Res_TT = 0;
+        String navigationResult =" ";
+ 
+        try {      
+            pstmt = getConnection().prepareStatement("insert into taikhoan (username, password) values (?, ?)");         
+        
+            pstmt.setString(1,  dks.getUser());
+            pstmt.setString(2, dks.getPass());
+            
+            Res_TK = pstmt.executeUpdate();
+            connObj.close();
+        } catch(Exception sqlException) {
+            sqlException.printStackTrace();
+            System.out.println("---- Loi tai khoan: " + sqlException);
+        }
+        if(Res_TK !=0) {
+            try {      
+                pstmt = getConnection().prepareStatement("insert into thongtin (email, diachi) values (?, ?)");         
+            
+                pstmt.setString(1,  dks.getEmail());
+                pstmt.setString(2, dks.getDiachi());
+                
+                Res_TT = pstmt.executeUpdate();
+                connObj.close();
+            } catch(Exception sqlException) {
+                sqlException.printStackTrace();
+                System.out.println("----Loi thong tin: " + sqlException);
+            } 
+            
+            if(Res_TT != 0) {
+            	navigationResult ="index";
+            }else {
+            	System.out.println("---- Loi insearch thong tin: " );
+            	navigationResult ="DangKy";
+			}
+        } else {
+        	System.out.println("---- Loi insearch tai khoan: " );
+        	navigationResult ="DangKy";
+        }
+        return navigationResult; 
+	}
+
+	
+	// ham get danh sach nguoi dung
+	public static ArrayList DanhSachNguoiDung() {
+		ArrayList  list_TT = new ArrayList ();
+	    try {
+	        stmtObj = getConnection().createStatement();    
+	        resultSetObj = stmtObj.executeQuery("select *from thongtin");    
+	        while(resultSetObj.next()) {  
+	            ThongTin tt = new ThongTin();  
+	            tt.setId(resultSetObj.getInt("id"));
+	            tt.setEmail(resultSetObj.getString("email"));  
+	            tt.setDiachi(resultSetObj.getString("diachi"));  
+	            System.out.println("id: " +tt.getId());
+	            list_TT.add(tt);  
+	        }   
+	        System.out.println("so luong danh sach: " + list_TT.size());
+	        
+	        connObj.close();
+	    } catch(Exception sqlException) {
+	        sqlException.printStackTrace();
+	    } 
+		return list_TT;
+	} 
+	
+	
+	   public static String LoadThonngTin(int userID) {
+	        ThongTin thongtin = null;
+	        System.out.println("Thong ton nguoi dung co Id: " + userID);
+	 
+	        Map<String,Object> sessionMapObj = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+	        
+	        try {
+	            stmtObj = getConnection().createStatement();    
+	             
+	            resultSetObj = stmtObj.executeQuery("select * from thongtin where id = "+userID);   
+	             
+	            if(resultSetObj != null) {
+	                resultSetObj.next();
+	                thongtin = new ThongTin(); 
+	                thongtin.setId(resultSetObj.getInt("id"));
+	                thongtin.setEmail(resultSetObj.getString("email"));
+	                thongtin.setDiachi(resultSetObj.getString("diachi"));
+	                
+	            }
+	            System.out.println("email: "+thongtin.getEmail());
+	            System.out.println("Dia chi: "+thongtin.getDiachi());
+	            sessionMapObj.put("thongtin_edit", thongtin);
+	            
+	            connObj.close();
+	        } catch(Exception sqlException) {
+	            sqlException.printStackTrace();
+	        }
+	        return "/ThongTinEdit.xhtml?faces-redirect=true";
+	    }
+
+    public static String SuaThongTin(ThongTin TTObj) {
+    	 System.out.println("----Sua thong tin nguoi dung co Id: " + TTObj.getId());
+        try {
+            pstmt = getConnection().prepareStatement("update thongtin set email=?, diachi=? where  id=?");    
+            pstmt.setString(1,TTObj.getEmail());  
+            pstmt.setString(2,TTObj.getDiachi());
+            pstmt.setInt(3,TTObj.getId()); 
+            pstmt.executeUpdate();
+            connObj.close();            
+        } catch(Exception sqlException) {
+            sqlException.printStackTrace();
+        }
+        return "/DanhSachNguoiDung.xhtml?faces-redirect=true";
+    }
+	
+    public  String XoaNguoiDung(int UserId){
+        System.out.println(" Xoa nguoi dung User Id: " + UserId);
+        try {
+            pstmt = getConnection().prepareStatement("delete from thongtin where id = "+UserId);  
+            pstmt.executeUpdate();  
+            connObj.close();
+        } catch(Exception sqlException){
+            sqlException.printStackTrace();
+        }
+        return "/DanhSachNguoiDung.xhtml?faces-redirect=true";
+    }
+		
+}
+
+===> File Model đăng ký =====================================================================================
+package Model;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+
+@ManagedBean @SessionScoped @RequestScoped
+
+public class DangKy {
+	private String user;
+	private String pass;
+	private String email;
+	private String diachi;
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
+	public String getPass() {
+		return pass;
+	}
+	public void setPass(String pass) {
+		this.pass = pass;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDiachi() {
+		return diachi;
+	}
+	public void setDiachi(String diachi) {
+		this.diachi = diachi;
+	}	
+}

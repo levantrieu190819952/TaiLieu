@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+
+<html 
+	lang="vi"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+ <h:head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" /> 
+    <title>Thi Dau Vao</title> 
+</h:head>
+<h:body>
+    <center><h2><h:outputText value="Dang nhap"/></h2></center>
+    <h:form > 
+            
+            	<center>
+            	
+	                User:
+	                <h:inputText value="#{DN.tk.user}" />
+	            	<br></br><br></br>
+	           
+	                Pass:
+	                <h:inputSecret value="#{DN.tk.pass}" />
+		            <br></br><br></br>
+	         
+	                <h:commandButton action="#{DN.DangNhap(DN.tk)}" value="Dang nhap" />
+	          		<br></br><br></br>
+	          
+	                <h:commandButton action="DangKy.xhtml" value="Dang ky"  />
+	          		<br></br><br></br>
+          		
+          		</center>
+    </h:form>
+</h:body>
+ 
+</html>
